@@ -480,7 +480,7 @@ server <- function(input, output, session) {
           output$mainMap <- renderLeaflet({
             leaflet(chicago) %>%
               setView(-87.7, 41.8481, 10) %>%
-              addTiles() %>%
+              addProviderTiles(providers$CartoDB.Positron) %>%
               addPolygons(stroke = TRUE, weight = 1, color="black", smoothFactor = 0.3, fillOpacity = 1,
                           fillColor = ~qpal(as.numeric(unlist(chicago$Percentage))),
                           label = ~paste0(community, ": ", Percentage,"%")) %>%
@@ -531,7 +531,7 @@ server <- function(input, output, session) {
           output$mainMap <- renderLeaflet({
             leaflet(chicago) %>%
               setView(-87.7, 41.8481, 10) %>%
-              addTiles() %>%
+              addProviderTiles(providers$CartoDB.Positron) %>%
               addPolygons(stroke = TRUE, weight = 1, color="black", smoothFactor = 0.3, fillOpacity = 1,
                           fillColor = ~qpal(as.numeric(unlist(chicago$Percentage))),
                           label = ~paste0(community, ": ", Percentage,"%")) %>%
