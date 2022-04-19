@@ -49,7 +49,7 @@ chicagoMap$community <- str_to_title(chicagoMap$community)
 
 ui <- dashboardPage(skin = "yellow",
                     
-                    #5,760 by 3,240
+                    #5,760 by 1,620
                     
                     #create dashboard and elements
                     dashboardHeader(title = "CS 424 Project 3"),
@@ -77,8 +77,7 @@ ui <- dashboardPage(skin = "yellow",
                                     column(1,
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
-                                           br(),br(),br(),br(),br(),br(),br(),br(),br(),
-                                           br(),
+                                           br(),br(),br(),br(),br(),
                                            
                                            box(solidHeader = TRUE, status = "primary", width=200,       
                                                checkboxInput("outsideChicago", "Outside Chicago Area", FALSE),
@@ -108,8 +107,7 @@ ui <- dashboardPage(skin = "yellow",
                                            )
                                     ),
                                     column(11,
-                                           br(),br(),br(),br(),
-                                           br(),br(),br(),
+                                           
                                            h1("Big Yellow Taxi",align="center",style = "color:#E6961F;text-decoration-line: underline;font-weight: bold;"),
                                            br(),br(),
                                            fluidRow(
@@ -304,7 +302,7 @@ server <- function(input, output, session) {
         ggplot(date, aes(Date, Count)) +
           geom_col(width = 0.8, fill="#E6961F") +
           labs(title="Taxi Rides by Date",
-               x = "date", y = "rides")+
+               x = "Date", y = "Rides")+
           scale_x_date(date_labels="%B",
                        breaks = datebreaks,
                        limits = c( as.Date(min(date$Date)), as.Date(max(date$Date))))+
@@ -312,7 +310,7 @@ server <- function(input, output, session) {
       })
       
       output$Date_Table <- renderDataTable(
-        datatable(format(date, format="%m/%d"), colnames=c("date", "rides"),
+        datatable(format(date, format="%m/%d"), colnames=c("Date", "Rides"),
                   options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
                   )) %>% 
           formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
@@ -325,12 +323,12 @@ server <- function(input, output, session) {
         ggplot(month, aes(x = Month, y = Count))+
           geom_col(width = 0.8, fill="#E6961F") + 
           labs(title="Taxi Rides by Month",
-               x = "month", y = "rides")+
+               x = "Month", y = "Rides")+
           scale_y_continuous(labels = scales::comma)
       })
       
       output$Month_Table <- renderDataTable(
-        datatable(month, colnames=c("month", "rides"),
+        datatable(month, colnames=c("Month", "Rides"),
                   options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
                   )) %>% 
           formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
@@ -434,7 +432,7 @@ server <- function(input, output, session) {
       })
       
       output$Time_Table <- renderDataTable(
-        datatable(time, colnames=c("Trip duration", "Rides"),
+        datatable(time, colnames=c("Trip Duration", "Rides"),
                   options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
                   )) %>% 
           formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
