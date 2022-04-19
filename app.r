@@ -26,8 +26,6 @@ areaDict <- read.csv(file = 'CommAreas.csv')
 areaDict <- areaDict[order(areaDict$AREA_NUMBE),]
 new.outChicago <- list(AREA_NUMBE=78, COMMUNITY="Outside Chicago")
 areaDict[nrow(areaDict) + 1, names(new.outChicago)] <- new.outChicago
-
-# areaDict$COMMUNITY
 # areaDict[[7]][35] #To look up community area i name areaDict[[7]][i]
 
 mapArea <- c()
@@ -93,7 +91,7 @@ ui <- dashboardPage(skin = "yellow",
                                                             choices=c("To","From"),selected="To"),
                                                p("Choose community area"),
                                                selectInput("area", NULL,
-                                                           choices = c(areaDict$COMMUNITY,"CHICAGO"), 
+                                                           choices = c(areaDict[order(areaDict$COMMUNITY),]$COMMUNITY,"CHICAGO"), 
                                                            selected = "CHICAGO"
                                                ),
                                                p("Choose time format"),
@@ -108,7 +106,7 @@ ui <- dashboardPage(skin = "yellow",
                                                ),
                                                p("Choose taxi company"),
                                                selectInput("taxi", NULL,
-                                                           choices = c(taxiDict$V2, "All Taxi Companies"), 
+                                                           choices = c(taxiDict[order(taxiDict$V2),]$V2, "All Taxi Companies"), 
                                                            selected = "All Taxi Companies"
                                                )
                                            )
