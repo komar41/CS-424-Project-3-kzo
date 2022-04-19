@@ -78,50 +78,39 @@ ui <- dashboardPage(skin = "yellow",
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
-<<<<<<< HEAD
-                                           br(),br(),br(),
-
-                                           box(solidHeader = TRUE, status = "primary", width = 200,
-=======
                                            br(),
                                            
-                                           box(solidHeader = TRUE, status = "primary", width=200,       
->>>>>>> 45977a8368fbd34727a21188dc1324fb02aa0f38
-                                               checkboxInput("outsideChicago", "Outside Chicago Area", FALSE),
+                                           box(solidHeader = TRUE, status = "primary", width = 200,   
+                                           checkboxInput("outsideChicago", "Outside Chicago Area", FALSE),
 
-                                               radioButtons(inputId = "toFrom",NULL,
-                                                            choices = c("To","From"),selected = "To"),
-                                               p("Choose community area"),
-                                               selectInput("area", NULL,
-                                                           choices = c(areaDict[order(areaDict$COMMUNITY),]$COMMUNITY,"Chicago"),
-                                                           selected = "Chicago"
-                                               ),
-                                               p("Choose time format"),
-                                               selectInput("time", NULL,
-                                                           choices = c("AM/PM","24-Hour"),
-                                                           selected = "AM/PM"
-                                               ),
-                                               p("Choose distance unit"),
-                                               selectInput("dist", NULL,
-                                                           choices = c("KM","Miles"),
-                                                           selected = "KM"
-                                               ),
-                                               p("Choose taxi company"),
-                                               selectInput("taxi", NULL,
-                                                           choices = c(taxiDict[order(taxiDict$V2),]$V2, "All Taxi Companies"),
-                                                           selected = "All Taxi Companies"
-                                               )
+                                           radioButtons(inputId = "toFrom",NULL,
+                                                        choices = c("To","From"),selected = "To"),
+                                           p("Choose community area"),
+                                           selectInput("area", NULL,
+                                                       choices = c(areaDict[order(areaDict$COMMUNITY),]$COMMUNITY,"Chicago"),
+                                                       selected = "Chicago"
+                                           ),
+                                           p("Choose time format"),
+                                           selectInput("time", NULL,
+                                                       choices = c("AM/PM","24-Hour"),
+                                                       selected = "AM/PM"
+                                           ),
+                                           p("Choose distance unit"),
+                                           selectInput("dist", NULL,
+                                                       choices = c("KM","Miles"),
+                                                       selected = "KM"
+                                           ),
+                                           p("Choose taxi company"),
+                                           selectInput("taxi", NULL,
+                                                       choices = c(taxiDict[order(taxiDict$V2),]$V2, "All Taxi Companies"),
+                                                       selected = "All Taxi Companies"
                                            )
+                                       )
                                     ),
                                     column(11,
-<<<<<<< HEAD
-                                           br(),br(),br(),br(),br(),br(),
-                                           h1("Big Yellow Taxi",align = "center",style = "color:#E6961F;text-decoration-line: underline;font-weight: bold;"),
-=======
                                            br(),br(),br(),br(),
                                            br(),br(),br(),
-                                           h1("Big Yellow Taxi",align="center",style = "color:#E6961F;text-decoration-line: underline;font-weight: bold;"),
->>>>>>> 45977a8368fbd34727a21188dc1324fb02aa0f38
+                                           h1("Big Yellow Taxi",align = "center",style = "color:#E6961F;text-decoration-line: underline;font-weight: bold;"),
                                            br(),br(),
                                            fluidRow(
                                              tags$head(tags$style(HTML(CSS))),
@@ -312,11 +301,7 @@ server <- function(input, output, session) {
       time <- read.csv(file = paste(path, "time.csv", sep = ""), header = TRUE)
       
       date$Date <- ymd(date$Date)
-<<<<<<< HEAD
-      datebreaks <- seq(as.Date("2019-01-01"), as.Date("2019-12-31"), by = "2 month")
-=======
-      datebreaks <- seq(as.Date("2019-01-01"), as.Date("2019-12-31"), by="1 month")
->>>>>>> 45977a8368fbd34727a21188dc1324fb02aa0f38
+      datebreaks <- seq(as.Date("2019-01-01"), as.Date("2019-12-31"), by = "1 month")
       output$Date_Bar <- renderPlot({
         ggplot(date, aes(Date, Count)) +
           geom_col(width = 0.8, fill = "#E6961F") +
@@ -344,25 +329,8 @@ server <- function(input, output, session) {
           formatRound('Count', digits = 0)
       )
       
-<<<<<<< HEAD
       month$Month <- factor(month$Month, levels = 1:12,
-                            labels = c(
-                              "Jan", 
-                              "Feb", 
-                              "Mar", 
-                              "Apr", 
-                              "May", 
-                              "Jun", 
-                              "Jul", 
-                              "Aug", 
-                              "Sept", 
-                              "Oct", 
-                              "Nov", 
-                              "Dec"))
-=======
-      month$Month <- factor(month$Month, levels=1:12,
-                            labels=c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"))
->>>>>>> 45977a8368fbd34727a21188dc1324fb02aa0f38
+                            labels = c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"))
       output$Month_Bar <- renderPlot({
         ggplot(month, aes(x = Month, y = Count)) +
           geom_col(width = 0.8, fill = "#E6961F") + 
@@ -388,8 +356,8 @@ server <- function(input, output, session) {
       )
       
       day$Day <- factor(day$Day, levels = 0:6,
-                        labels = c("Mon", "Tues", "Wed",
-                                 "Thurs", "Fri", "Sat", "Sun"))
+                        labels = c("Monday", "Tuesday", "Wednesday",
+                                 "Thursday", "Friday", "Saturday", "Sunday"))
       output$Day_Bar <- renderPlot({
         ggplot(day, aes(x = Day, y = Count)) +
           geom_col(width = 0.8, fill = "#E6961F") + 
@@ -492,7 +460,7 @@ server <- function(input, output, session) {
         output$Mileage_Table <- renderDataTable(
           datatable(
             mileage_miles, 
-            colnames = c("Distance (Miles)", "rides"),
+            colnames = c("Distance (Miles)", "Rides"),
             options = list(
               searching = FALSE,
               pageLength = 7, 
@@ -518,7 +486,7 @@ server <- function(input, output, session) {
       output$Time_Table <- renderDataTable(
         datatable(
           time, 
-          colnames = c("Trip duration", "Rides"),
+          colnames = c("Trip Duration", "Rides"),
           options = list(
             searching = FALSE,
             pageLength = 7, 
