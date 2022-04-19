@@ -10,6 +10,7 @@ library(tidyr)
 library(scales)
 library(leaflet)
 library(sp)
+library(stringr)
 
 
 taxiDict <- read.csv(file = 'taxiDict.csv', header=F)
