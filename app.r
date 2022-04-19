@@ -78,9 +78,15 @@ ui <- dashboardPage(skin = "yellow",
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
+<<<<<<< HEAD
                                            br(),br(),br(),
 
                                            box(solidHeader = TRUE, status = "primary", width = 200,
+=======
+                                           br(),
+                                           
+                                           box(solidHeader = TRUE, status = "primary", width=200,       
+>>>>>>> 45977a8368fbd34727a21188dc1324fb02aa0f38
                                                checkboxInput("outsideChicago", "Outside Chicago Area", FALSE),
 
                                                radioButtons(inputId = "toFrom",NULL,
@@ -108,8 +114,14 @@ ui <- dashboardPage(skin = "yellow",
                                            )
                                     ),
                                     column(11,
+<<<<<<< HEAD
                                            br(),br(),br(),br(),br(),br(),
                                            h1("Big Yellow Taxi",align = "center",style = "color:#E6961F;text-decoration-line: underline;font-weight: bold;"),
+=======
+                                           br(),br(),br(),br(),
+                                           br(),br(),br(),
+                                           h1("Big Yellow Taxi",align="center",style = "color:#E6961F;text-decoration-line: underline;font-weight: bold;"),
+>>>>>>> 45977a8368fbd34727a21188dc1324fb02aa0f38
                                            br(),br(),
                                            fluidRow(
                                              tags$head(tags$style(HTML(CSS))),
@@ -300,7 +312,11 @@ server <- function(input, output, session) {
       time <- read.csv(file = paste(path, "time.csv", sep = ""), header = TRUE)
       
       date$Date <- ymd(date$Date)
+<<<<<<< HEAD
       datebreaks <- seq(as.Date("2019-01-01"), as.Date("2019-12-31"), by = "2 month")
+=======
+      datebreaks <- seq(as.Date("2019-01-01"), as.Date("2019-12-31"), by="1 month")
+>>>>>>> 45977a8368fbd34727a21188dc1324fb02aa0f38
       output$Date_Bar <- renderPlot({
         ggplot(date, aes(Date, Count)) +
           geom_col(width = 0.8, fill = "#E6961F") +
@@ -328,6 +344,7 @@ server <- function(input, output, session) {
           formatRound('Count', digits = 0)
       )
       
+<<<<<<< HEAD
       month$Month <- factor(month$Month, levels = 1:12,
                             labels = c(
                               "Jan", 
@@ -342,6 +359,10 @@ server <- function(input, output, session) {
                               "Oct", 
                               "Nov", 
                               "Dec"))
+=======
+      month$Month <- factor(month$Month, levels=1:12,
+                            labels=c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"))
+>>>>>>> 45977a8368fbd34727a21188dc1324fb02aa0f38
       output$Month_Bar <- renderPlot({
         ggplot(month, aes(x = Month, y = Count)) +
           geom_col(width = 0.8, fill = "#E6961F") + 
