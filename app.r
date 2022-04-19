@@ -59,10 +59,6 @@ ui <- dashboardPage(skin = "yellow",
                         br(),br(),br(),br(),br(),br(),br(),br(),br(),
                         br(),br(),br(),br(),br(),br(),br(),br(),br(),
                         br(),br(),br(),br(),br(),br(),br(),br(),br(),
-                        br(),br(),br(),br(),br(),br(),br(),br(),br(),
-                        br(),br(),br(),br(),br(),br(),br(),br(),br(),
-                        br(),br(),br(),br(),br(),br(),br(),br(),br(),
-                        br(),br(),br(),br(),br(),br(),br(),br(),br(),
                         menuItem("Taxi Trips", tabName = "taxi", icon = NULL),
                         menuItem("About Page", tabName = "about", icon = NULL)
                       )
@@ -79,10 +75,7 @@ ui <- dashboardPage(skin = "yellow",
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
-                                           br(),br(),br(),br(),br(),br(),br(),br(),br(),
-                                           br(),br(),br(),br(),br(),br(),br(),br(),br(),
-                                           br(),br(),br(),br(),br(),br(),br(),br(),br(),
-                                           br(),br(),br(),
+                                           br(),
                                            
                                            box(solidHeader = TRUE, status = "primary", width=200,       
                                                checkboxInput("outsideChicago", "Outside Chicago Area", FALSE),
@@ -112,10 +105,8 @@ ui <- dashboardPage(skin = "yellow",
                                            )
                                     ),
                                     column(11,
-                                           br(),br(),br(),br(),br(),br(),br(),br(),br(),
-                                           br(),br(),br(),br(),br(),br(),br(),br(),br(),
-                                           br(),br(),br(),br(),br(),br(),br(),br(),br(),
                                            br(),br(),br(),br(),
+                                           br(),br(),br(),
                                            h1("Big Yellow Taxi",align="center",style = "color:#E6961F;text-decoration-line: underline;font-weight: bold;"),
                                            br(),br(),
                                            fluidRow(
@@ -305,7 +296,7 @@ server <- function(input, output, session) {
       time <- read.csv(file = paste(path, "time.csv", sep=""), header = TRUE)
       
       date$Date <- ymd(date$Date)
-      datebreaks <- seq(as.Date("2019-01-01"), as.Date("2019-12-31"), by="2 month")
+      datebreaks <- seq(as.Date("2019-01-01"), as.Date("2019-12-31"), by="1 month")
       output$Date_Bar <- renderPlot({
         ggplot(date, aes(Date, Count)) +
           geom_col(width = 0.8, fill="#E6961F") +
@@ -326,7 +317,7 @@ server <- function(input, output, session) {
       )
       
       month$Month <- factor(month$Month, levels=1:12,
-                            labels=c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"))
+                            labels=c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"))
       output$Month_Bar <- renderPlot({
         ggplot(month, aes(x = Month, y = Count))+
           geom_col(width = 0.8, fill="#E6961F") + 
