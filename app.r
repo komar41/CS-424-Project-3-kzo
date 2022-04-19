@@ -24,6 +24,9 @@ for (row in 1:nrow(taxiDict)) {
 
 areaDict <- read.csv(file = 'CommAreas.csv')
 areaDict <- areaDict[order(areaDict$AREA_NUMBE),]
+new.outChicago <- list(AREA_NUMBE=78, COMMUNITY="Outside Chicago")
+areaDict[nrow(areaDict) + 1, names(new.outChicago)] <- new.outChicago
+
 # areaDict$COMMUNITY
 # areaDict[[7]][35] #To look up community area i name areaDict[[7]][i]
 
@@ -71,8 +74,6 @@ ui <- dashboardPage(skin = "yellow",
                         
                         tabItem(tabName="taxi",
                                 
-                                h1("Big Yellow Taxi",align="center"),
-                                br(),br(),
                                 fluidPage(
                                   useShinyjs(),
                                   fluidRow(
@@ -83,6 +84,7 @@ ui <- dashboardPage(skin = "yellow",
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
                                            br(),br(),br(),br(),br(),br(),br(),br(),br(),
+                                           br(),br(),br(),
                                            
                                            box(solidHeader = TRUE, status = "primary", width=200,       
                                                checkboxInput("outsideChicago", "Outside Chicago Area", FALSE),
@@ -112,6 +114,12 @@ ui <- dashboardPage(skin = "yellow",
                                            )
                                     ),
                                     column(11,
+                                           br(),br(),br(),br(),br(),br(),br(),br(),br(),
+                                           br(),br(),br(),br(),br(),br(),br(),br(),br(),
+                                           br(),br(),br(),br(),br(),br(),br(),br(),br(),
+                                           br(),br(),br(),br(),
+                                           h1("Big Yellow Taxi",align="center",style = "color:#E6961F;text-decoration-line: underline;font-weight: bold;"),
+                                           br(),br(),
                                            fluidRow(
                                              tags$head(tags$style(HTML(CSS))),
                                              
@@ -220,7 +228,7 @@ ui <- dashboardPage(skin = "yellow",
                         
                         #About page
                         tabItem(tabName="about",
-                                h2("About Page"),
+                                h1("About",style = "color:#E6961F;text-decoration-line: underline;font-weight: bold;"),
                                 verbatimTextOutput("AboutOut")
                         )
                         
@@ -448,6 +456,10 @@ server <- function(input, output, session) {
           
           chicago <- chicagoMap
           chicago <- chicago[order(chicago$area_numbe),]
+          if(input$outsideChicago){
+            new.row <- list(area_numbe=78, community="Outside Chicago")
+            chicago[nrow(chicago) + 1, names(new.row)] <- new.row
+          }
           chicago$Percentage <- as.list(as.numeric(drop$Percentage))
           areaNo <- as.integer(mapArea[input$area])
           bins <- c(0, 0.05, 0.1, 0.5, 1, 3, 5, 10, Inf)
@@ -465,12 +477,12 @@ server <- function(input, output, session) {
               geom_col(width = 0.8, fill="#E6961F") +
               labs(title="Percentage of Taxi Rides",
                    subtitle=paste("From: ",input$area, sep=""),
-                   x = "drop off area", y = "percentage of rides")+
+                   x = "drop off area", y = "percentage of rides(%)")+
               scale_y_continuous(labels = scales::comma) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
           })
           
           output$Percentage_Trip_Table <- renderDataTable(
-            datatable(drop, colnames=c("drop off area", "percentage of rides"),
+            datatable(drop, colnames=c("drop off area", "percentage of rides(%)"),
                       options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
                       )) %>% 
               formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
@@ -484,7 +496,7 @@ server <- function(input, output, session) {
               addPolygons(stroke = TRUE, weight = 1, color="black", smoothFactor = 0.3, fillOpacity = 1,
                           fillColor = ~qpal(as.numeric(unlist(chicago$Percentage))),
                           label = ~paste0(community, ": ", Percentage,"%")) %>%
-              addLegend(values=~(chicago$Percentage), pal=qpal, opacity = 1.0, title="Trip Percentage(%)",
+              addLegend(values=~(chicago$Percentage), pal=qpal, opacity = 1.0, title="percentage of rides(%)",
                         labFormat = function(type, cuts, p) {
                           paste0(labels)
                         }) %>% 
@@ -498,6 +510,10 @@ server <- function(input, output, session) {
           
           chicago <- chicagoMap
           chicago <- chicago[order(chicago$area_numbe),]
+          if(input$outsideChicago){
+            new.row <- list(area_numbe=78, community="Outside Chicago")
+            chicago[nrow(chicago) + 1, names(new.row)] <- new.row
+          }
           chicago$Percentage <- as.list(as.numeric(pick$Percentage))
           areaNo <- as.integer(mapArea[input$area])
           bins <- c(0, 0.05, 0.1, 0.5, 1, 3, 5, 10, Inf)
@@ -515,12 +531,12 @@ server <- function(input, output, session) {
               geom_col(width = 0.8, fill="#E6961F") +
               labs(title="Percentage of Taxi Rides",
                    subtitle=paste("To: ",input$area, sep=""),
-                   x = "pick up area", y = "percentage of rides")+
+                   x = "pick up area", y = "percentage of rides(%)")+
               scale_y_continuous(labels = scales::comma) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
           })
           
           output$Percentage_Trip_Table <- renderDataTable(
-            datatable(pick, colnames=c("pick up area", "percentage of rides"),
+            datatable(pick, colnames=c("pick up area", "percentage of rides(%)"),
                       options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
                       )) %>% 
               formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
@@ -535,7 +551,7 @@ server <- function(input, output, session) {
               addPolygons(stroke = TRUE, weight = 1, color="black", smoothFactor = 0.3, fillOpacity = 1,
                           fillColor = ~qpal(as.numeric(unlist(chicago$Percentage))),
                           label = ~paste0(community, ": ", Percentage,"%")) %>%
-              addLegend(values=~(chicago$Percentage), pal=qpal, opacity = 1.0, title="Trip Percentage(%)",
+              addLegend(values=~(chicago$Percentage), pal=qpal, opacity = 1.0, title="percentage of rides(%)",
                         labFormat = function(type, cuts, p) {
                           paste0(labels)
                         }) %>% 
@@ -565,6 +581,17 @@ server <- function(input, output, session) {
     # print(selected$area_numbe)
     # print(areaDict[[7]][selected$area_numbe])
     updateSelectInput(session, 'area', selected = areaDict[[7]][selected$area_numbe])
+  })
+  
+  output$AboutOut <- renderText({
+    "Created by: Kazi Shahrukh Omar & Akash Magnadia\n
+         Created: April 18th, 2022\n
+         Data Source:\n
+         1. Taxi Trips Chicago - 2019: https://data.cityofchicago.org/Transportation/Taxi-Trips-2019/h4cq-z3dy\n
+         2. Chicago Community Area Boundaries: https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Community-Areas-current-/cauq-8yn6\n
+         Data Category: Transportation\n
+         Data Owner: Department of Business Affairs & Consumer Protection\n
+         Intended for visualizing the trends and interesting patterns in Taxi ridership data (2019) in Chicago. Since the 2019 data is pre-COVID it is more representative of a 'typical' year."   
   })
   
 }

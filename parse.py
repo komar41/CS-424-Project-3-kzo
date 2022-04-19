@@ -31,7 +31,7 @@ def preprocess(df, dictCompany):
     return df
 
 
-def preCalc(df, str, drop=False, pick=False):
+def preCalc(df, str, drop=False, pick=False, outChicago=False):
     
     df_date = df.groupby([df['tripStartTime'].dt.date]).size().to_frame().reset_index().rename(columns={'tripStartTime': 'Date',0: 'Count'})
     df_hour = df.groupby([df['tripStartTime'].dt.hour]).size().to_frame().reset_index().rename(columns={'tripStartTime': 'Hour', 0: 'Count'})
@@ -75,7 +75,11 @@ def preCalc(df, str, drop=False, pick=False):
     if(drop):
         dfDrop = df.groupby([df['dropArea']]).size().to_frame().reset_index().rename(columns={0: 'Percentage'})
         dfDrop['Percentage'] = round((100. * dfDrop['Percentage'] / dfDrop['Percentage'].sum()),2)
-        for i in range(1,78):
+        if(outChicago):
+            n=79
+        else:
+            n=78
+        for i in range(1,n):
             if(i not in dfDrop['dropArea'].tolist()):
                 add = {'dropArea':i, 'Percentage':0}
                 dfDrop = dfDrop.append(add, ignore_index = True)
@@ -86,7 +90,11 @@ def preCalc(df, str, drop=False, pick=False):
     if(pick):
         dfPick = df.groupby([df['pickupArea']]).size().to_frame().reset_index().rename(columns={0: 'Percentage'})
         dfPick['Percentage'] = round((100. * dfPick['Percentage'] / dfPick['Percentage'].sum()),2)
-        for i in range(1,78):
+        if(outChicago):
+            n=79
+        else:
+            n=78
+        for i in range(1,n):
             if(i not in dfPick['pickupArea'].tolist()):
                 add = {'pickupArea':i, 'Percentage':0}
                 dfPick = dfPick.append(add, ignore_index = True)
