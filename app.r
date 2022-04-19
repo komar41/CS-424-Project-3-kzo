@@ -24,6 +24,7 @@ for (row in 1:nrow(taxiDict)) {
 
 areaDict <- read.csv(file = 'CommAreas.csv')
 areaDict <- areaDict[order(areaDict$AREA_NUMBE),]
+areaDict$COMMUNITY <- str_to_title(areaDict$COMMUNITY)
 new.outChicago <- list(AREA_NUMBE=78, COMMUNITY="Outside Chicago")
 areaDict[nrow(areaDict) + 1, names(new.outChicago)] <- new.outChicago
 # areaDict[[7]][35] #To look up community area i name areaDict[[7]][i]
@@ -42,6 +43,7 @@ CSS <- "
 "
 chicagoMap <- rgdal::readOGR("Boundaries - Community Areas (current).geojson")
 chicagoMap$area_numbe <- as.numeric(chicagoMap$area_numbe)
+chicagoMap$community <- str_to_title(chicagoMap$community)
 
 
 ui <- dashboardPage(skin = "yellow",
@@ -84,8 +86,8 @@ ui <- dashboardPage(skin = "yellow",
                                                             choices=c("To","From"),selected="To"),
                                                p("Choose community area"),
                                                selectInput("area", NULL,
-                                                           choices = c(areaDict[order(areaDict$COMMUNITY),]$COMMUNITY,"CHICAGO"), 
-                                                           selected = "CHICAGO"
+                                                           choices = c(areaDict[order(areaDict$COMMUNITY),]$COMMUNITY,"Chicago"), 
+                                                           selected = "Chicago"
                                                ),
                                                p("Choose time format"),
                                                selectInput("time", NULL,
@@ -241,7 +243,7 @@ server <- function(input, output, session) {
     input$dist},
     
     {
-      if(input$area=="CHICAGO"){
+      if(input$area=="Chicago"){
         boolPerct = FALSE
         shinyjs::disable("toFrom")
         shinyjs::hide("Percentage_Trip_Plot")
