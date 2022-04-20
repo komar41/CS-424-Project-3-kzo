@@ -45,15 +45,15 @@ def preCalc(df, str, drop=False, pick=False, outChicago=False):
     df_mileage_miles['mileage_bin_miles'] = pd.cut(df['tripMiles'], bins=ranges_miles)
     df_mileage_miles = df_mileage_miles.groupby([df_mileage_miles['mileage_bin_miles']]).size().to_frame().reset_index().rename(columns={'mileage_bin_miles': 'Mileage_miles', 0: 'Count'})
     df_mileage_miles.sort_values(by='Mileage_miles')
-    labels = ['0.5 - 1', '1 - 3', '3 - 5', '5 - 10', '10 - 25', '15 - 20', '20 - 100']
+    labels = ['0.5 - 1', '1 - 3', '3 - 5', '5 - 10', '10 - 15', '15 - 20', '20 - 100']
     df_mileage_miles['Mileage_miles'] = df_mileage_miles['Mileage_miles'].cat.rename_categories(labels)
 
     df_mileage_km = df
-    ranges_km  = [0.79, 1.6, 4.8, 8.0, 16.0, 24.0, 32.0, 160.0]
+    ranges_km  = [0.79, 2, 5, 10, 15, 25, 35, 160.0]
     df_mileage_km['mileage_bin_km'] = pd.cut(df['tripKM'], bins=ranges_km)
     df_mileage_km = df_mileage_km.groupby([df_mileage_km['mileage_bin_km']]).size().to_frame().reset_index().rename(columns={'mileage_bin_km': 'Mileage_km', 0: 'Count'})
     df_mileage_km.sort_values(by='Mileage_km')
-    labels = ['0.8 - 1.6', '1.6 - 4.8', '4.8 - 8', '8 - 16', '16 - 24', '24 - 32', '32 - 160']
+    labels = ['0.8 - 2', '2 - 5', '5 - 10', '10 - 15', '15 - 25', '25 - 35', '35 - 160']
     df_mileage_km['Mileage_km'] = df_mileage_km['Mileage_km'].cat.rename_categories(labels)
 
     df_time = df

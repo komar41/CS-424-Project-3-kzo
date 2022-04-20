@@ -13,7 +13,7 @@ library(sp)
 library(stringr)
 
 
-taxiDict <- read.csv(file = 'taxiDict.csv', header=F)
+taxiDict <- read.csv(file = 'taxiDictReMap.csv', header=F)
 # taxiDict[[2]][6] #i+1, if i=0 look up i+1
 # taxiDict$V2
 
@@ -300,7 +300,7 @@ server <- function(input, output, session) {
       datebreaks <- seq(as.Date("2019-01-01"), as.Date("2019-12-31"), by="1 month")
       output$Date_Bar <- renderPlot({
         ggplot(date, aes(Date, Count)) +
-          geom_col(width = 0.8, fill="#E6961F") +
+          geom_col(fill="#E6961F") +
           labs(title="Taxi Rides by Date",
                x = "Date", y = "Rides")+
           scale_x_date(date_labels="%B",
@@ -385,7 +385,7 @@ server <- function(input, output, session) {
       
       if(input$dist=="KM"){
         # mileage_KM
-        mileage_km$Mileage_km <- factor(mileage_km$Mileage_km, levels= c("0.8 - 1.6", "1.6 - 4.8", "4.8 - 8", "8 - 16", "16 - 24", "24 - 32", "32 - 160"))
+        mileage_km$Mileage_km <- factor(mileage_km$Mileage_km, levels= c("0.8 - 2", "2 - 5", "5 - 10", "10 - 15", "15 - 25", "25 - 35", "35 - 160"))
         output$Mileage_Bar <- renderPlot({
           ggplot(mileage_km, aes(x = Mileage_km, y = Count))+
             geom_col(width = 0.8, fill="#E6961F") +
@@ -404,7 +404,7 @@ server <- function(input, output, session) {
       }
       else{
         # mileage_miles
-        mileage_miles$Mileage_miles <- factor(mileage_miles$Mileage_miles, levels= c("0.5 - 1", "1 - 3", "3 - 5", "5 - 10", "10 - 25", "15 - 20", "20 - 100"))
+        mileage_miles$Mileage_miles <- factor(mileage_miles$Mileage_miles, levels= c("0.5 - 1", "1 - 3", "3 - 5", "5 - 10", "10 - 15", "15 - 20", "20 - 100"))
         output$Mileage_Bar <- renderPlot({
           ggplot(mileage_miles, aes(x = Mileage_miles, y = Count))+
             geom_col(width = 0.8, fill="#E6961F") + 
