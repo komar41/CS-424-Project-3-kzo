@@ -310,9 +310,17 @@ server <- function(input, output, session) {
       })
       
       output$Date_Table <- renderDataTable(
-        datatable(format(date, format="%m/%d"), colnames=c("Date", "Rides"),
-                  options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                  )) %>% 
+        datatable(
+          format(date, format="%m/%d"),
+          colnames=c("Date", "Rides"),
+          options = list(
+            searching = FALSE,
+            pageLength = 7, 
+            lengthChange = FALSE,
+            columnDefs = list(list(className = 'dt-center', targets = "_all"))
+          ),
+          rownames = FALSE
+        ) %>%
           formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
           formatRound('Count', digits = 0)
       )
@@ -328,9 +336,17 @@ server <- function(input, output, session) {
       })
       
       output$Month_Table <- renderDataTable(
-        datatable(month, colnames=c("Month", "Rides"),
-                  options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                  )) %>% 
+        datatable(
+          month, 
+          colnames=c("Month", "Rides"),
+          options = list(
+            searching = FALSE,
+            pageLength = 7, 
+            lengthChange = FALSE,
+            columnDefs = list(list(className = 'dt-center', targets = "_all"))
+          ),
+          rownames = FALSE
+        ) %>%
           formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
           formatRound('Count', digits = 0)
       )
@@ -347,9 +363,17 @@ server <- function(input, output, session) {
       })
       
       output$Day_Table <- renderDataTable(
-        datatable(day, colnames=c("Day of Week", "Rides"),
-                  options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                  )) %>% 
+        datatable(
+          day, 
+          colnames=c("Day of Week", "Rides"),
+          options = list(
+            searching = FALSE,
+            pageLength = 7, 
+            lengthChange = FALSE,
+            columnDefs = list(list(className = 'dt-center', targets = "_all"))
+          ),
+          rownames = FALSE
+        ) %>%
           formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
           formatRound('Count', digits = 0)
       )
@@ -376,9 +400,17 @@ server <- function(input, output, session) {
       })
       
       output$Hour_Table <- renderDataTable(
-        datatable(hour, colnames=c("Hour of Day", "Rides"),
-                  options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                  )) %>% 
+        datatable(
+          hour, 
+          colnames=c("Hour of Day", "Rides"),
+          options = list(
+            searching = FALSE,
+            pageLength = 7, 
+            lengthChange = FALSE,
+            columnDefs = list(list(className = 'dt-center', targets = "_all"))
+          ),
+          rownames = FALSE
+        ) %>%
           formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
           formatRound('Count', digits = 0)
       )
@@ -390,14 +422,22 @@ server <- function(input, output, session) {
           ggplot(mileage_km, aes(x = Mileage_km, y = Count))+
             geom_col(width = 0.8, fill="#E6961F") +
             labs(title="Taxi Rides by Trip Distance",
-                 x = "Distance (km)", y = "Rides")+
+                 x = "Distance (KM)", y = "Rides")+
             scale_y_continuous(labels = scales::comma)
         })
         
         output$Mileage_Table <- renderDataTable(
-          datatable(mileage_km, colnames=c("Distance (km)", "Rides"),
-                    options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                    )) %>%
+          datatable(
+            mileage_km, 
+            colnames=c("Distance (KM)", "Rides"),
+            options = list(
+              searching = FALSE,
+              pageLength = 7, 
+              lengthChange = FALSE,
+              columnDefs = list(list(className = 'dt-center', targets = "_all"))
+            ),
+            rownames = FALSE
+          ) %>%
             formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
             formatRound('Count', digits = 0)
         )
@@ -409,14 +449,22 @@ server <- function(input, output, session) {
           ggplot(mileage_miles, aes(x = Mileage_miles, y = Count))+
             geom_col(width = 0.8, fill="#E6961F") + 
             labs(title="Taxi Rides by Trip Distance",
-                 x = "Distance (miles)", y = "Rides")+
+                 x = "Distance (Miles)", y = "Rides")+
             scale_y_continuous(labels = scales::comma)
         })
         
         output$Mileage_Table <- renderDataTable(
-          datatable(mileage_miles, colnames=c("Distance (miles)", "Rides"),
-                    options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                    )) %>% 
+          datatable(
+            mileage_miles, 
+            colnames=c("Distance (Miles)", "Rides"),
+            options = list(
+              searching = FALSE,
+              pageLength = 7, 
+              lengthChange = FALSE,
+              columnDefs = list(list(className = 'dt-center', targets = "_all"))
+            ),
+            rownames = FALSE
+          ) %>% 
             formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
             formatRound('Count', digits = 0)
         )
@@ -432,9 +480,17 @@ server <- function(input, output, session) {
       })
       
       output$Time_Table <- renderDataTable(
-        datatable(time, colnames=c("Trip Duration", "Rides"),
-                  options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                  )) %>% 
+        datatable(
+          time, 
+          colnames=c("Trip Duration", "Rides"),
+          options = list(
+            searching = FALSE,
+            pageLength = 7, 
+            lengthChange = FALSE,
+            columnDefs = list(list(className = 'dt-center', targets = "_all"))
+          ),
+          rownames = FALSE
+        ) %>% 
           formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
           formatRound('Count', digits = 0)
       )
@@ -472,9 +528,17 @@ server <- function(input, output, session) {
           })
           
           output$Percentage_Trip_Table <- renderDataTable(
-            datatable(drop, colnames=c("Drop Off Area", "Percentage of Rides(%)"),
-                      options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                      )) %>% 
+            datatable(
+              drop, 
+              colnames=c("Drop Off Area", "Percentage of Rides(%)"),
+              options = list(
+                searching = FALSE,
+                pageLength = 7, 
+                lengthChange = FALSE,
+                columnDefs = list(list(className = 'dt-center', targets = "_all"))
+              ),
+              rownames = FALSE
+            ) %>% 
               formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
               formatRound('Percentage', digits = 2)
           )
@@ -526,9 +590,17 @@ server <- function(input, output, session) {
           })
           
           output$Percentage_Trip_Table <- renderDataTable(
-            datatable(pick, colnames=c("Pick Up Area", "Percentage of Rides(%)"),
-                      options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                      )) %>% 
+            datatable(
+              pick, 
+              colnames=c("Pick Up Area", "Percentage of Rides(%)"),
+              options = list(
+                searching = FALSE,
+                pageLength = 7, 
+                lengthChange = FALSE,
+                columnDefs = list(list(className = 'dt-center', targets = "_all"))
+              ),
+              rownames = FALSE
+            ) %>% 
               formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
               formatRound('Percentage', digits = 2)
           )
