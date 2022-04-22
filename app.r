@@ -534,7 +534,7 @@ server <- function(input, output, session) {
           
           output$Percentage_Trip_Table <- renderDataTable(
             datatable(
-              drop, 
+              drop[,c(1,2)], 
               colnames=c("Drop Off Area", "Percentage of Rides(%)"),
               options = list(
                 searching = FALSE,
@@ -600,7 +600,7 @@ server <- function(input, output, session) {
           
           output$Percentage_Trip_Table <- renderDataTable(
             datatable(
-              pick, 
+              pick[,c(1,2)], 
               colnames=c("Pick Up Area", "Percentage of Rides(%)"),
               options = list(
                 searching = FALSE,
