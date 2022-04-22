@@ -296,6 +296,7 @@ server <- function(input, output, session) {
       mileage_miles <- read.csv(file = paste(path, "mileage_miles.csv", sep=""), header = TRUE)
       time <- read.csv(file = paste(path, "time.csv", sep=""), header = TRUE)
       
+      options(scipen=10000)
       date$Date <- ymd(date$Date)
       datebreaks <- seq(as.Date("2019-01-01"), as.Date("2019-12-31"), by="1 month")
       output$Date_Bar <- renderPlot({
@@ -306,13 +307,21 @@ server <- function(input, output, session) {
           scale_x_date(date_labels="%B",
                        breaks = datebreaks,
                        limits = c( as.Date(min(date$Date)), as.Date(max(date$Date))))+
-          scale_y_continuous(labels = scales::comma)
+          scale_y_continuous(label=scales::comma_format(accuracy=1), breaks = function(x) unique(floor(pretty(seq(0, (max(x) + 1) * 1.1)))))
       })
       
       output$Date_Table <- renderDataTable(
-        datatable(format(date, format="%m/%d"), colnames=c("Date", "Rides"),
-                  options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                  )) %>% 
+        datatable(
+          format(date, format="%m/%d"),
+          colnames=c("Date", "Rides"),
+          options = list(
+            searching = FALSE,
+            pageLength = 7, 
+            lengthChange = FALSE,
+            columnDefs = list(list(className = 'dt-center', targets = "_all"))
+          ),
+          rownames = FALSE
+        ) %>%
           formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
           formatRound('Count', digits = 0)
       )
@@ -324,13 +333,21 @@ server <- function(input, output, session) {
           geom_col(width = 0.8, fill="#E6961F") + 
           labs(title="Taxi Rides by Month",
                x = "Month", y = "Rides")+
-          scale_y_continuous(labels = scales::comma)
+          scale_y_continuous(label=scales::comma_format(accuracy=1), breaks = function(x) unique(floor(pretty(seq(0, (max(x) + 1) * 1.1)))))
       })
       
       output$Month_Table <- renderDataTable(
-        datatable(month, colnames=c("Month", "Rides"),
-                  options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                  )) %>% 
+        datatable(
+          month, 
+          colnames=c("Month", "Rides"),
+          options = list(
+            searching = FALSE,
+            pageLength = 7, 
+            lengthChange = FALSE,
+            columnDefs = list(list(className = 'dt-center', targets = "_all"))
+          ),
+          rownames = FALSE
+        ) %>%
           formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
           formatRound('Count', digits = 0)
       )
@@ -343,13 +360,21 @@ server <- function(input, output, session) {
           geom_col(width = 0.8, fill="#E6961F") + 
           labs(title="Taxi Rides by Day of Week",
                x = "Day of Week", y = "Rides")+
-          scale_y_continuous(labels = scales::comma)
+          scale_y_continuous(label=scales::comma_format(accuracy=1), breaks = function(x) unique(floor(pretty(seq(0, (max(x) + 1) * 1.1)))))
       })
       
       output$Day_Table <- renderDataTable(
-        datatable(day, colnames=c("Day of Week", "Rides"),
-                  options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                  )) %>% 
+        datatable(
+          day, 
+          colnames=c("Day of Week", "Rides"),
+          options = list(
+            searching = FALSE,
+            pageLength = 7, 
+            lengthChange = FALSE,
+            columnDefs = list(list(className = 'dt-center', targets = "_all"))
+          ),
+          rownames = FALSE
+        ) %>%
           formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
           formatRound('Count', digits = 0)
       )
@@ -372,13 +397,21 @@ server <- function(input, output, session) {
           geom_col(width = 0.8, fill="#E6961F") + 
           labs(title="Taxi Rides by Hour of Day",
                x = "Hour of Day", y = "Rides")+
-          scale_y_continuous(labels = scales::comma)
+          scale_y_continuous(label=scales::comma_format(accuracy=1), breaks = function(x) unique(floor(pretty(seq(0, (max(x) + 1) * 1.1)))))
       })
       
       output$Hour_Table <- renderDataTable(
-        datatable(hour, colnames=c("Hour of Day", "Rides"),
-                  options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                  )) %>% 
+        datatable(
+          hour, 
+          colnames=c("Hour of Day", "Rides"),
+          options = list(
+            searching = FALSE,
+            pageLength = 7, 
+            lengthChange = FALSE,
+            columnDefs = list(list(className = 'dt-center', targets = "_all"))
+          ),
+          rownames = FALSE
+        ) %>%
           formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
           formatRound('Count', digits = 0)
       )
@@ -390,14 +423,22 @@ server <- function(input, output, session) {
           ggplot(mileage_km, aes(x = Mileage_km, y = Count))+
             geom_col(width = 0.8, fill="#E6961F") +
             labs(title="Taxi Rides by Trip Distance",
-                 x = "Distance (km)", y = "Rides")+
-            scale_y_continuous(labels = scales::comma)
+                 x = "Distance (KM)", y = "Rides")+
+            scale_y_continuous(label=scales::comma_format(accuracy=1), breaks = function(x) unique(floor(pretty(seq(0, (max(x) + 1) * 1.1)))))
         })
         
         output$Mileage_Table <- renderDataTable(
-          datatable(mileage_km, colnames=c("Distance (km)", "Rides"),
-                    options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                    )) %>%
+          datatable(
+            mileage_km, 
+            colnames=c("Distance (KM)", "Rides"),
+            options = list(
+              searching = FALSE,
+              pageLength = 7, 
+              lengthChange = FALSE,
+              columnDefs = list(list(className = 'dt-center', targets = "_all"))
+            ),
+            rownames = FALSE
+          ) %>%
             formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
             formatRound('Count', digits = 0)
         )
@@ -409,14 +450,22 @@ server <- function(input, output, session) {
           ggplot(mileage_miles, aes(x = Mileage_miles, y = Count))+
             geom_col(width = 0.8, fill="#E6961F") + 
             labs(title="Taxi Rides by Trip Distance",
-                 x = "Distance (miles)", y = "Rides")+
-            scale_y_continuous(labels = scales::comma)
+                 x = "Distance (Miles)", y = "Rides")+
+            scale_y_continuous(label=scales::comma_format(accuracy=1), breaks = function(x) unique(floor(pretty(seq(0, (max(x) + 1) * 1.1)))))
         })
         
         output$Mileage_Table <- renderDataTable(
-          datatable(mileage_miles, colnames=c("Distance (miles)", "Rides"),
-                    options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                    )) %>% 
+          datatable(
+            mileage_miles, 
+            colnames=c("Distance (Miles)", "Rides"),
+            options = list(
+              searching = FALSE,
+              pageLength = 7, 
+              lengthChange = FALSE,
+              columnDefs = list(list(className = 'dt-center', targets = "_all"))
+            ),
+            rownames = FALSE
+          ) %>% 
             formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
             formatRound('Count', digits = 0)
         )
@@ -428,13 +477,21 @@ server <- function(input, output, session) {
           geom_col(width = 0.8, fill="#E6961F") +
           labs(title="Taxi Rides by Trip Duration",
                x = "Trip Duration", y = "Rides")+
-          scale_y_continuous(labels = scales::comma)
+          scale_y_continuous(label=scales::comma_format(accuracy=1), breaks = function(x) unique(floor(pretty(seq(0, (max(x) + 1) * 1.1)))))
       })
       
       output$Time_Table <- renderDataTable(
-        datatable(time, colnames=c("Trip Duration", "Rides"),
-                  options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                  )) %>% 
+        datatable(
+          time, 
+          colnames=c("Trip Duration", "Rides"),
+          options = list(
+            searching = FALSE,
+            pageLength = 7, 
+            lengthChange = FALSE,
+            columnDefs = list(list(className = 'dt-center', targets = "_all"))
+          ),
+          rownames = FALSE
+        ) %>% 
           formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
           formatRound('Count', digits = 0)
       )
@@ -450,7 +507,9 @@ server <- function(input, output, session) {
             new.row <- list(area_numbe=78, community="Outside Chicago")
             chicago[nrow(chicago) + 1, names(new.row)] <- new.row
           }
+
           chicago$Percentage <- as.list(as.numeric(drop$Percentage))
+          if(input$outsideChicago) chicago<-head(chicago,-1)
           areaNo <- as.integer(mapArea[input$area])
           bins <- c(0, 0.05, 0.1, 0.5, 1, 3, 5, 10, Inf)
           qpal <- colorBin("RdYlBu", chicago$Percentage, bins = bins)
@@ -461,20 +520,30 @@ server <- function(input, output, session) {
           }
           drop <- drop[order(drop$dropArea),]
           row.names(drop) <- NULL
+          drop <- drop %>% mutate( ToHighlight = ifelse( dropArea == "Outside Chicago", "yes", "no" ) )
           
           output$Percentage_Trip_Plot <- renderPlot({
-            ggplot(drop, aes(x = dropArea, y = Percentage))+
-              geom_col(width = 0.8, fill="#E6961F") +
+            ggplot(drop, aes(x = dropArea, y = Percentage, fill = ToHighlight))+
+              geom_col(width = 0.8) +
               labs(title="Percentage of Taxi Rides",
                    subtitle=paste("From: ",input$area, sep=""),
                    x = "Drop Off Area", y = "Percentage of Rides(%)")+
-              scale_y_continuous(labels = scales::comma) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+              scale_fill_manual( values = c( "yes"="#FB4D3D", "no"="#E6961F" ), guide = "none" )+
+              scale_y_continuous(label=scales::comma_format(accuracy=1), breaks = function(x) unique(floor(pretty(seq(0, (max(x) + 1) * 1.1))))) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
           })
           
           output$Percentage_Trip_Table <- renderDataTable(
-            datatable(drop, colnames=c("Drop Off Area", "Percentage of Rides(%)"),
-                      options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                      )) %>% 
+            datatable(
+              drop, 
+              colnames=c("Drop Off Area", "Percentage of Rides(%)"),
+              options = list(
+                searching = FALSE,
+                pageLength = 7, 
+                lengthChange = FALSE,
+                columnDefs = list(list(className = 'dt-center', targets = "_all"))
+              ),
+              rownames = FALSE
+            ) %>% 
               formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
               formatRound('Percentage', digits = 2)
           )
@@ -485,7 +554,7 @@ server <- function(input, output, session) {
               addProviderTiles(providers$CartoDB.Positron) %>%
               addPolygons(stroke = TRUE, weight = 1, color="black", smoothFactor = 0.3, fillOpacity = 1,
                           fillColor = ~qpal(as.numeric(unlist(chicago$Percentage))),
-                          label = ~paste0(community, ": ", Percentage,"%")) %>%
+                          label = ~paste0(chicago$community, ": ", chicago$Percentage,"%")) %>%
               addLegend(values=~(chicago$Percentage), pal=qpal, opacity = 1.0, title="percentage of rides(%)",
                         labFormat = function(type, cuts, p) {
                           paste0(labels)
@@ -504,7 +573,9 @@ server <- function(input, output, session) {
             new.row <- list(area_numbe=78, community="Outside Chicago")
             chicago[nrow(chicago) + 1, names(new.row)] <- new.row
           }
+          
           chicago$Percentage <- as.list(as.numeric(pick$Percentage))
+          if(input$outsideChicago) chicago<-head(chicago,-1)
           areaNo <- as.integer(mapArea[input$area])
           bins <- c(0, 0.05, 0.1, 0.5, 1, 3, 5, 10, Inf)
           qpal <- colorBin("RdYlBu", chicago$Percentage, bins = bins)
@@ -515,20 +586,30 @@ server <- function(input, output, session) {
           }
           pick <- pick[order(pick$pickupArea),]
           row.names(pick) <- NULL
+          pick <- pick %>% mutate( ToHighlight = ifelse( pickupArea == "Outside Chicago", "yes", "no" ) )
           
           output$Percentage_Trip_Plot <- renderPlot({
-            ggplot(pick, aes(x = pickupArea, y = Percentage))+
-              geom_col(width = 0.8, fill="#E6961F") +
+            ggplot(pick, aes(x = pickupArea, y = Percentage, fill = ToHighlight))+
+              geom_col(width = 0.8) +
               labs(title="Percentage of Taxi Rides",
                    subtitle=paste("To: ",input$area, sep=""),
                    x = "Pick Up Area", y = "Percentage of Rides(%)")+
-              scale_y_continuous(labels = scales::comma) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+              scale_fill_manual( values = c( "yes"="#FB4D3D", "no"="#E6961F" ), guide = "none" )+
+              scale_y_continuous(label=scales::comma_format(accuracy=1), breaks = function(x) unique(floor(pretty(seq(0, (max(x) + 1) * 1.1))))) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
           })
           
           output$Percentage_Trip_Table <- renderDataTable(
-            datatable(pick, colnames=c("Pick Up Area", "Percentage of Rides(%)"),
-                      options = list(searching = FALSE,pageLength = 7, lengthChange=FALSE
-                      )) %>% 
+            datatable(
+              pick, 
+              colnames=c("Pick Up Area", "Percentage of Rides(%)"),
+              options = list(
+                searching = FALSE,
+                pageLength = 7, 
+                lengthChange = FALSE,
+                columnDefs = list(list(className = 'dt-center', targets = "_all"))
+              ),
+              rownames = FALSE
+            ) %>% 
               formatCurrency(2, currency = "", interval = 3, mark = ",")%>%
               formatRound('Percentage', digits = 2)
           )
@@ -540,7 +621,7 @@ server <- function(input, output, session) {
               addProviderTiles(providers$CartoDB.Positron) %>%
               addPolygons(stroke = TRUE, weight = 1, color="black", smoothFactor = 0.3, fillOpacity = 1,
                           fillColor = ~qpal(as.numeric(unlist(chicago$Percentage))),
-                          label = ~paste0(community, ": ", Percentage,"%")) %>%
+                          label = ~paste0(chicago$community, ": ", chicago$Percentage,"%")) %>%
               addLegend(values=~(chicago$Percentage), pal=qpal, opacity = 1.0, title="Percentage of Rides(%)",
                         labFormat = function(type, cuts, p) {
                           paste0(labels)
@@ -568,8 +649,7 @@ server <- function(input, output, session) {
     
     coords <- as.data.frame(cbind(lon, lat))
     selected <- chicagoMap[point,]
-    # print(selected$area_numbe)
-    # print(areaDict[[7]][selected$area_numbe])
+
     updateSelectInput(session, 'area', selected = areaDict[[7]][selected$area_numbe])
   })
   
