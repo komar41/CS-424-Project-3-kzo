@@ -1,7 +1,7 @@
 # Big Yellow Taxi
 Application Link: http://shiny.evl.uic.edu:3838/g5/CS-424-Project-3-kzo/
 
-Detailed Documentation: 
+Detailed Documentation: https://sites.google.com/view/cs424-komar3/project-3
 
 The visulization was created for a screen with resolution of 5760x1620 (Sage screen of EVL UIC Lab). [For reference see picture below]
 
