@@ -102,4 +102,7 @@ Due to shiny-server limitations, we split the data into various subfolders with 
 6. Here we are looking at data from only the Loop. The previous two insights can be furthermore supported as about 1/4 of the riders are traveling within the loop.
 ![image](https://github.com/user-attachments/assets/7def6d9b-7b45-4872-8ed1-27f673b0a9dc)
 
+## Team
+- Kazi Shahrukh Omar
+- Akash Magnadia
 
