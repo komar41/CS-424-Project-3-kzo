@@ -84,19 +84,22 @@ Due to shiny-server limitations, we split the data into various subfolders with 
 
 ## Interesting Findings
 
-1. Ridership patterns throughout the year, including gaps during specific periods
-2. Weekly ridership trends, with highest ridership on Thursdays and Fridays
-3. Rush-hour spikes in the Loop area
-4. Trip distance and duration patterns in the Loop
-5. Inter-community travel patterns
+1. When looking at all community area in Chicago, I find it interesting that there are some gaps during the end of January, the start of April, the end of May, the start of July, the start of September, and the end of November. There are also minor gaps in the graph which might be because of low ridership during weekends.
+![image](https://github.com/user-attachments/assets/d3040238-b07d-410d-a0df-f520bb98e438)
 
-# Big Yellow Taxi
-Application Link: http://shiny.evl.uic.edu:3838/g5/CS-424-Project-3-kzo/
+2. Looking at this insight backs up our theory about the second part of insight 1. There are low ridership data in Chicago during weekends and highest ridership on Thursdays and Fridays as can be seen on the bar graph and data table.
+![image](https://github.com/user-attachments/assets/72092641-1452-4482-bc5f-4622ad54f0ef)
 
-Detailed Documentation: https://sites.google.com/view/cs424-komar3/project-3
+3. Here we are looking data from only the Loop. When we look at 8 AM, 9 AM, 4 PM and 5 PM, there is a relative spike in ridership compared to the other times around those specific time of the day. This can be explained by the fact that those are rush-hour times.
+![image](https://github.com/user-attachments/assets/781dc591-ffd4-4f86-bee5-8e277743dfaf)
 
-The visulization was created for a screen with resolution of 5760x1620 (Sage screen of EVL UIC Lab). [For reference see picture below]
+4. Here we are looking at data from only the Loop. The majority of the rides are between 0.8 and 2 Kilometers. This might be because the customers are mostly traveling within the loop.
+![image](https://github.com/user-attachments/assets/b7ca5224-9d44-450f-800d-bb5143deb777)
 
-This project was built for visualizing the trends and interesting patterns in Taxi ridership data (2019) in Chicago. Since the 2019 data is pre-COVID it is more representative of a 'typical' year for taxi ridership.
+5. Here we are looking at data from only the Loop. The majority of the rides are between 5 and 10 minutes. This furthermore supports our claims from insight 4 that most of the riders in the loop are traveling small distances and possibly within the loop.
+![image](https://github.com/user-attachments/assets/76f7ec9a-fd26-4d11-a377-b20587e6ea4c)
 
-![WhatsApp Image 2022-04-21 at 11 30 56 PM](https://user-images.githubusercontent.com/90569118/164603472-22adce04-3812-4130-b927-c0cf9270b6d2.jpeg)
+6. Here we are looking at data from only the Loop. The previous two insights can be furthermore supported as about 1/4 of the riders are traveling within the loop.
+![image](https://github.com/user-attachments/assets/7def6d9b-7b45-4872-8ed1-27f673b0a9dc)
+
+
